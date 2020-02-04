@@ -84,7 +84,8 @@ class Calendar extends Component {
     /** Style passed to the header */
     headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /** Provide aria-level for calendar heading for proper accessibility when used with web (react-native-web) */
-    webAriaLevel: PropTypes.number
+    webAriaLevel: PropTypes.number,
+    ignoreBackToCurrentDate: PropTypes.bool
   };
 
   constructor(props) {
@@ -106,9 +107,11 @@ class Calendar extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const current = parseDate(nextProps.current);
     if (current && current.toString('yyyy MM') !== this.state.currentMonth.toString('yyyy MM')) {
-      this.setState({
-        currentMonth: current.clone()
-      });
+      if (!this.props.ignoreBackToCurrentDate) {
+        this.setState({
+          currentMonth: current.clone()
+        });
+      }
     }
   }
 
