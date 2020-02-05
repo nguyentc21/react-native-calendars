@@ -59,7 +59,7 @@ class Day extends Component {
 
   render() {
     const containerStyle = [this.style.base];
-    const textStyle = [this.style.text];
+    const textStyle = [this.style.text, this.props.additionTextStyle];
     const marking = this.props.marking || {};
     const dot = this.renderDots(marking);
 

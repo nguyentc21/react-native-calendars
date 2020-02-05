@@ -85,7 +85,8 @@ class Calendar extends Component {
     headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
     /** Provide aria-level for calendar heading for proper accessibility when used with web (react-native-web) */
     webAriaLevel: PropTypes.number,
-    ignoreBackToCurrentDate: PropTypes.bool
+    ignoreBackToCurrentDate: PropTypes.bool,
+    getAdditionTextStyle: PropTypes.func
   };
 
   constructor(props) {
@@ -182,7 +183,10 @@ class Calendar extends Component {
     const DayComp = this.getDayComponent();
     const date = day.getDate();
     const dateAsObject = xdateToData(day);
-
+    let additionTextStyle = {}
+    if (this.props.getAdditionTextStyle) {
+      additionTextStyle = this.props.getAdditionTextStyle(day, id)
+    }
     return (
       <View style={{flex: 1, alignItems: 'center'}} key={id}>
         <DayComp
@@ -193,6 +197,7 @@ class Calendar extends Component {
           onLongPress={this.longPressDay}
           date={dateAsObject}
           marking={this.getDateMarking(day)}
+          additionTextStyle={additionTextStyle}
         >
           {date}
         </DayComp>
